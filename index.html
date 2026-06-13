@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NayePankh Foundation</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg:#0f172a;
+  --text:#fff;
+  --card:rgba(255,255,255,0.08);
+  --accent:#38bdf8;
+}
+.light {
+  --bg:#fff;
+  --text:#111;
+  --card:#f3f4f6;
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins';}
+body{background:var(--bg);color:var(--text);transition:0.3s;scroll-behavior:smooth;}
+
+/* Navbar */
+nav{
+  position:sticky;top:0;
+  display:flex;justify-content:space-between;
+  padding:15px 30px;
+  background:var(--card);
+  backdrop-filter:blur(10px);
+}
+nav a{color:var(--text);margin:0 10px;text-decoration:none;}
+nav button{cursor:pointer}
+
+/* Hero */
+.hero{
+  height:100vh;
+  display:flex;flex-direction:column;
+  justify-content:center;align-items:center;
+  background:linear-gradient(120deg,#38bdf8,#6366f1);
+  text-align:center;
+}
+.hero h1{font-size:3rem;}
+.hero span{color:yellow}
+
+/* Sections */
+section{padding:80px 20px;text-align:center;}
+
+.cards{
+  display:flex;gap:20px;flex-wrap:wrap;
+  justify-content:center;
+}
+.card{
+  width:260px;padding:20px;
+  border-radius:15px;
+  background:var(--card);
+  transition:0.4s;
+}
+.card:hover{transform:translateY(-10px);}
+
+/* Buttons */
+.btn{
+  margin-top:15px;
+  padding:10px 15px;
+  background:var(--accent);
+  border:none;border-radius:8px;
+  cursor:pointer;
+}
+
+/* Scroll animation */
+.reveal{opacity:0;transform:translateY(40px);transition:1s;}
+.reveal.active{opacity:1;transform:translateY(0);}
+
+/* Chatbot */
+.chatbot{
+  position:fixed;bottom:20px;right:20px;
+}
+.chatbox{
+  display:none;
+  width:250px;
+  background:var(--card);
+  padding:15px;
+  border-radius:10px;
+}
+.chatbox input{
+  width:100%;padding:8px;margin-top:10px;
+}
+
+/* Modal */
+.modal{
+  display:none;
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.6);
+  justify-content:center;align-items:center;
+}
+.modal-content{
+  background:white;color:black;
+  padding:20px;border-radius:10px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+.hero h1{font-size:2rem;}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+<h2>NayePankh</h2>
+<div>
+<a href="#about">About</a>
+<a href="#work">Initiatives</a>
+<a href="#contact">Contact</a>
+<button onclick="toggleMode()">🌙</button>
+</div>
+</nav>
+
+<div class="hero">
+<h1>We <span id="typing"></span></h1>
+<p>Empowering Lives Through Change</p>
+<button class="btn" onclick="openModal()">Donate Now</button>
+</div>
+
+<section id="about" class="reveal">
+<h2>About Us</h2>
+<p>NayePankh Foundation works towards education, awareness, and social impact.</p>
+</section>
+
+<section id="work" class="reveal">
+<h2>Our Initiatives</h2>
+<div class="cards">
+<div class="card">📚 Education</div>
+<div class="card">🍱 Food Distribution</div>
+<div class="card">📢 Awareness</div>
+</div>
+</section>
+
+<section class="reveal">
+<h2>Get Involved</h2>
+<div class="cards">
+<div class="card">Volunteer</div>
+<div class="card">Donate</div>
+<div class="card">Partner</div>
+</div>
+</section>
+
+<section id="contact" class="reveal">
+<h2>Contact</h2>
+<p>Email: info@nayepankh.com</p>
+</section>
+
+<footer>
+<p>© 2026 NayePankh Foundation</p>
+</footer>
+
+<!-- Chatbot -->
+<div class="chatbot">
+<button onclick="toggleChat()">🤖</button>
+<div class="chatbox" id="chatbox">
+<p>Hello! How can I help?</p>
+<input type="text" placeholder="Type here...">
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<h3>Donate</h3>
+<p>Thank you for supporting us!</p>
+<button onclick="closeModal()">Close</button>
+</div>
+</div>
+
+<script>
+// Dark mode
+function toggleMode(){
+document.body.classList.toggle("light");
+}
+
+// Typing
+const words=["Empower","Educate","Transform"];
+let i=0,j=0,current="",del=false;
+function type(){
+current=words[i];
+document.getElementById("typing").textContent=current.substring(0,j);
+if(!del){j++;if(j>current.length){del=true;setTimeout(type,1000);return;}}
+else{j--;if(j<0){del=false;i=(i+1)%words.length;}}
+setTimeout(type,del?50:100);
+}
+type();
+
+// Scroll animation
+const reveals=document.querySelectorAll(".reveal");
+window.addEventListener("scroll",()=>{
+reveals.forEach(el=>{
+if(el.getBoundingClientRect().top<window.innerHeight-100){
+el.classList.add("active");
+}
+});
+});
+
+// Chatbot
+function toggleChat(){
+const box=document.getElementById("chatbox");
+box.style.display=box.style.display==="block"?"none":"block";
+}
+
+// Modal
+function openModal(){
+document.getElementById("modal").style.display="flex";
+}
+function closeModal(){
+document.getElementById("modal").style.display="none";
+}
+</script>
+
+</body>
+</html>
